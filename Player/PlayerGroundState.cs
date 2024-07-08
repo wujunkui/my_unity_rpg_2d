@@ -21,6 +21,8 @@ namespace Player
         public override void Update()
         {
             base.Update();
+            if (Input.GetKeyDown(KeyCode.Mouse0))
+                stateMachine.ChangeState(player.primaryAttack);
             if (!player.IsGroundedDetected())
                 stateMachine.ChangeState(player.airState);
             if (Input.GetButton("Jump") && player.IsGroundedDetected())

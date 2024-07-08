@@ -14,8 +14,17 @@ namespace Player
         public override void Enter()
         {
             base.Enter();
-            if (comboCounter > 2 || Time.time >= lastTimeAttacked + comboWindow) 
+            if (comboCounter > 2 || Time.time >= lastTimeAttacked + comboWindow)
                 comboCounter = 0;
+            player.anim.SetInteger("ComboCounter", comboCounter);
+
+            float attackDir = player.facingDirection;
+            if (xInput != 0)
+                attackDir = xInput;
+            
+            player.SetVelocity(player.attackMovements[comboCounter].x * attackDir,
+                player.attackMovements[comboCounter].y);
+            stateTimer = .1f;
         }
 
         public override void Exit()
@@ -28,7 +37,8 @@ namespace Player
         public override void Update()
         {
             base.Update();
-            
+            if (stateTimer < 0)
+                player.SetZeroVelocity();
             if (triggerCalled)
                 stateMachine.ChangeState(player.idleState);
         }

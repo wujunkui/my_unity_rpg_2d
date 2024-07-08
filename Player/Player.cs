@@ -7,6 +7,11 @@ namespace Player
 {
     public class Player : Entity
     {
+
+        [Header("Attack details")] 
+        public Vector2[] attackMovements;
+        
+        public bool isBusy;
         [Header("Move Info")] 
         
         public float moveSpeed = 5f;
@@ -69,6 +74,13 @@ namespace Player
             base.Update();
             stateMachine.currentState.Update();
             CheckForDashInput();
+        }
+
+        public IEnumerable BusyFor(float _seconds)
+        {
+            isBusy = true;
+            yield return new WaitForSeconds(_seconds);
+            isBusy = false;
         }
 
         public void SetVelocity(float _xVelocity, float _yVelocity)
