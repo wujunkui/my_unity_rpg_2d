@@ -4,34 +4,41 @@ namespace Enemy
 {
     public class EnemyState
     {
-        protected Enemy enemy;
+        protected Enemy enemyBase;
         protected EnemyStateMachine stateMachine;
         private string animBoolName;
         protected float stateTimer;
         protected bool triggerCalled;
+        public Rigidbody2D rb;
         
 
-        public EnemyState(Enemy enemy, EnemyStateMachine stateMachine, string animBoolName)
+        public EnemyState(Enemy enemyBase, EnemyStateMachine stateMachine, string animBoolName)
         {
-            this.enemy = enemy;
+            this.enemyBase = enemyBase;
             this.stateMachine = stateMachine;
             this.animBoolName = animBoolName;
         }
 
         public virtual void Enter()
         {
-            enemy.anim.SetBool(animBoolName, true);
+            enemyBase.anim.SetBool(animBoolName, true);
+            rb = enemyBase.rb;
         }
 
         public virtual void Exit()
         {
-            enemy.anim.SetBool(animBoolName, false);
+            enemyBase.anim.SetBool(animBoolName, false);
         }
 
         public virtual void Update()
         {
             stateTimer -= Time.deltaTime;
 
+        }
+
+        public virtual void AnimationFinishTrigger()
+        {
+            triggerCalled = true;
         }
     }
 }

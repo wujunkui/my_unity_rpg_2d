@@ -94,7 +94,7 @@ public class Entity : MonoBehaviour
     
     #region Gizmos
         
-    protected void OnDrawGizmos()
+    protected virtual void OnDrawGizmos()
     {
         Gizmos.DrawLine(groundCheck.position,
             new Vector3(groundCheck.position.x, groundCheck.position.y - groundCheckDistance));
