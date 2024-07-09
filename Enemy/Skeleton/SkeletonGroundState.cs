@@ -1,3 +1,5 @@
+using UnityEngine;
+
 namespace Enemy.Skeleton
 {
     public class SkeletonGroundState: SkeletonState
@@ -9,7 +11,8 @@ namespace Enemy.Skeleton
         public override void Update()
         {
             base.Update();
-            if(enemy.IsPlayerDetected())
+            var player = PlayerManager.instance.player.transform;
+            if (enemy.IsPlayerDetected() || Vector2.Distance(enemy.transform.position, player.position) < enemy.alertDistance)
                 stateMachine.ChangeState(enemy.battleState);
         }
     }

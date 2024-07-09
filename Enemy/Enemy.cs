@@ -7,10 +7,20 @@ namespace Enemy
     {
         [SerializeField] protected LayerMask whatIsPlayer;
         [SerializeField] protected float playerDetectDistance = 50f;
+        // stunned info
+        public float stunDuration = 1;
+        public Vector2 stunDirection;
+        
+        // move info
         public float moveSpeed = 1.5f;
         public float idleTime = 2f;
-
+        public float battleTime = 4f;
+        public float giveUpDistance = 7;
+        public float alertDistance = 2;
+        
         public float attackDistance = 1.5f;
+        public float attackCooldown;
+        [HideInInspector] public float lastAttackTime;
         
         public EnemyStateMachine stateMachine { get; private set; }
         protected override void Awake()

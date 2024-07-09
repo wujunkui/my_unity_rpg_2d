@@ -1,3 +1,5 @@
+using UnityEngine;
+
 namespace Enemy.Skeleton
 {
     public class SkeletonAttackState: SkeletonState
@@ -15,14 +17,18 @@ namespace Enemy.Skeleton
         public override void Exit()
         {
             base.Exit();
+            enemy.lastAttackTime = Time.time;
         }
 
         public override void Update()
         {
             base.Update();
             enemy.SetZeroVelocity();
-            if(triggerCalled)
+            if (triggerCalled)
+            {
                 stateMachine.ChangeState(enemy.battleState);
+            }
+                
         }
     }
 }

@@ -29,18 +29,35 @@ namespace Enemy.Skeleton
             var playerDetected = enemy.IsPlayerDetected();
             if (playerDetected)
             {
+                stateTimer = enemy.battleTime;
                 if (playerDetected.distance < enemy.attackDistance)
                 {
-                    stateMachine.ChangeState(enemy.attackState);
+                    if(CanAttack())
+                        stateMachine.ChangeState(enemy.attackState);
+                    
+                    
                 }
             }
+            else
+            {
+                if(stateTimer < 0)
+                    stateMachine.ChangeState(enemy.idleState);
+            }
             
-            // moveDir = player.transform.position.x > enemy.transform.position.x ? 1 : -1;
             if (player.transform.position.x > enemy.transform.position.x)
                 moveDir = 1;
             else if (player.transform.position.x < enemy.transform.position.x)
                 moveDir = -1;
             enemy.SetVelocity(enemy.moveSpeed * moveDir, rb.velocity.y);
+        }
+
+        private bool CanAttack()
+        {
+            if (Time.time < enemy.lastAttackTime + enemy.attackCooldown)
+                // 攻击未冷却
+                return false;
+            // enemy.lastAttackTime = Time.time;
+            return true;
         }
     }
 }

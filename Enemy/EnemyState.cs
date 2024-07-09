@@ -23,11 +23,13 @@ namespace Enemy
         {
             enemyBase.anim.SetBool(animBoolName, true);
             rb = enemyBase.rb;
+            triggerCalled = false;
         }
 
         public virtual void Exit()
         {
             enemyBase.anim.SetBool(animBoolName, false);
+            
         }
 
         public virtual void Update()

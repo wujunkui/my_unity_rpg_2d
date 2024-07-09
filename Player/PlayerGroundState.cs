@@ -21,7 +21,7 @@ namespace Player
         public override void Update()
         {
             base.Update();
-            if (Input.GetKeyDown(KeyCode.Mouse0))
+            if (Input.GetKeyDown(KeyCode.J) || Input.GetKey(KeyCode.Mouse0))
                 stateMachine.ChangeState(player.primaryAttack);
             if (!player.IsGroundedDetected())
                 stateMachine.ChangeState(player.airState);

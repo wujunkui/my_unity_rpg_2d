@@ -6,6 +6,7 @@ namespace Enemy.Skeleton
         public SkeletonMoveState moveState { get; private set; }
         public SkeletonBattleState battleState { get; private set; }
         public SkeletonAttackState attackState { get; private set; }
+        public SkeletonStunnedState stunnedState { get; private set; }
         protected override void Awake()
         {
             base.Awake();
@@ -13,6 +14,7 @@ namespace Enemy.Skeleton
             moveState = new SkeletonMoveState(this, stateMachine, "Move", this);
             battleState = new SkeletonBattleState(this, stateMachine, "Move", this);
             attackState = new SkeletonAttackState(this, stateMachine, "Attack", this);
+            stunnedState = new SkeletonStunnedState(this, stateMachine, "Stunned", this);
         }
 
         protected override void Start()

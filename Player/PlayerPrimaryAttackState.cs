@@ -14,6 +14,7 @@ namespace Player
         public override void Enter()
         {
             base.Enter();
+            xInput = 0; // 修复可能出现攻击反向问题，但是不能在攻击中改变方向了
             if (comboCounter > 2 || Time.time >= lastTimeAttacked + comboWindow)
                 comboCounter = 0;
             player.anim.SetInteger("ComboCounter", comboCounter);
