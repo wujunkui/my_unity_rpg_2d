@@ -10,6 +10,8 @@ namespace Player
 
         [Header("Attack details")] 
         public Vector2[] attackMovements;
+
+        public float counterAttackDuration = .2f;
         
         public bool isBusy;
         
@@ -36,6 +38,10 @@ namespace Player
         public PlayerWallSlideState wallSlideState { get; private set; }
         public PlayerWallJumpState wallJumpState { get; private set; }
         public PlayerPrimaryAttackState primaryAttack { get; private set; }
+        public PlayerCounterAttackState counterAttack { get; private set; }
+        public PlayerAimSwordState aimSwordState { get; private set; }
+        public PlayerCatchSwordState catchSwordState { get; private set; }
+        
         protected override void Awake()
         {
             base.Awake();
@@ -48,6 +54,9 @@ namespace Player
             wallSlideState = new PlayerWallSlideState(this, stateMachine, "WallSlide");
             wallJumpState = new PlayerWallJumpState(this, stateMachine, "Jump");
             primaryAttack = new PlayerPrimaryAttackState(this, stateMachine, "Attack");
+            counterAttack = new PlayerCounterAttackState(this, stateMachine, "CounterAttack");
+            aimSwordState = new PlayerAimSwordState(this, stateMachine, "AimSword");
+            catchSwordState = new PlayerCatchSwordState(this, stateMachine, "CatchSword");
         }
 
         protected override void Start()
