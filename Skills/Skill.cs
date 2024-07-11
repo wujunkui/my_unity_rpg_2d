@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 namespace Skills
@@ -6,6 +7,13 @@ namespace Skills
     {
         [SerializeField] protected float cooldown;
         protected float cooldownTimer;
+
+        protected Player.Player player;
+
+        protected virtual void Start()
+        {
+            player = PlayerManager.instance.player;
+        }
 
         protected virtual void Update()
         {

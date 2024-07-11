@@ -27,7 +27,8 @@ namespace Player
         [SerializeField] 
         private float dashCooldown;
         private float dashUsageTimer;
-        
+
+        public SkillManager skill;
 
         public PlayerStateMachine stateMachine { get; private set; }
         public PlayerIdleState idleState { get; private set; }
@@ -45,6 +46,7 @@ namespace Player
         protected override void Awake()
         {
             base.Awake();
+            skill = SkillManager.instance;
             stateMachine = new PlayerStateMachine();
             idleState = new PlayerIdleState(this, stateMachine, "Idle");
             moveState = new PlayerMoveState(this, stateMachine, "Move");

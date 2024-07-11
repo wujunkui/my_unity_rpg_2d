@@ -19,5 +19,10 @@ namespace Player
                 if(enemy != null) enemy.Damage();
             }
         }
+
+        private void ThrowSword()
+        {
+            SkillManager.instance.sword.CreateSword();
+        }
     }
 }

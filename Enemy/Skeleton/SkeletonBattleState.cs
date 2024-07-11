@@ -22,6 +22,7 @@ namespace Enemy.Skeleton
             base.Exit();
         }
 
+        // ReSharper disable Unity.PerformanceAnalysis
         public override void Update()
         {
             base.Update();
@@ -36,7 +37,7 @@ namespace Enemy.Skeleton
                         stateMachine.ChangeState(enemy.attackState);
                     
                     
-                }
+                } 
             }
             else
             {
@@ -48,6 +49,9 @@ namespace Enemy.Skeleton
                 moveDir = 1;
             else if (player.transform.position.x < enemy.transform.position.x)
                 moveDir = -1;
+            if (playerDetected && playerDetected.distance < enemy.attackDistance - .5f)
+                return;
+      
             enemy.SetVelocity(enemy.moveSpeed * moveDir, rb.velocity.y);
         }
 

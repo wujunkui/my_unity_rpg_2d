@@ -1,17 +1,12 @@
+using Core;
 using UnityEngine;
 
 namespace Enemy
 {
-    public class EnemyState
+    public class EnemyState: State
     {
-        protected Enemy enemyBase;
         protected EnemyStateMachine stateMachine;
-        private string animBoolName;
-        protected float stateTimer;
-        protected bool triggerCalled;
-        public Rigidbody2D rb;
-        
-
+        protected Enemy enemyBase;
         public EnemyState(Enemy enemyBase, EnemyStateMachine stateMachine, string animBoolName)
         {
             this.enemyBase = enemyBase;
@@ -19,20 +14,20 @@ namespace Enemy
             this.animBoolName = animBoolName;
         }
 
-        public virtual void Enter()
+        public override void Enter()
         {
             enemyBase.anim.SetBool(animBoolName, true);
             rb = enemyBase.rb;
             triggerCalled = false;
         }
 
-        public virtual void Exit()
+        public override void Exit()
         {
             enemyBase.anim.SetBool(animBoolName, false);
             
         }
 
-        public virtual void Update()
+        public override void Update()
         {
             stateTimer -= Time.deltaTime;
 
