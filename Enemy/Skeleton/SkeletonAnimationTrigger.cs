@@ -20,8 +20,8 @@ namespace Enemy.Skeleton
                 var player = hit.GetComponent<Player.Player>();
                 if(player != null)
                 {
-                    hit.GetComponent<CharacterStats>().TakeDamage(enemy.stats.damage.GetValue());
-                    player.Damage();
+                    PlayerStats target = hit.GetComponent<PlayerStats>();
+                    enemy.stats.DoDamage(target);
                 }
             }
         }

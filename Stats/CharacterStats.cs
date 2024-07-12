@@ -7,9 +7,11 @@ namespace Stats
         public Stat damage;
         public Stat maxHealth;
 
-        [SerializeField] private int currentHealth;
+        public int currentHealth;
 
-        private void Start()
+        public System.Action onHealthChange;
+        
+        protected virtual void Start()
         {
             currentHealth = maxHealth.GetValue();
         
@@ -20,10 +22,22 @@ namespace Stats
             int totalDamage = damage.GetValue();
             _targetStats.TakeDamage(totalDamage);
         }
-
+        
+        /// <summary>
+        /// 被伤害多少？
+        /// </summary>
+        /// <param name="_damage"></param>
         public virtual void TakeDamage(int _damage)
         {
+            DecreaseHealthBy(_damage);
+            if(currentHealth <= 0)
+                Die();
+        }
+
+        protected virtual void DecreaseHealthBy(int _damage)
+        {
             currentHealth -= _damage;
+            onHealthChange?.Invoke();
         }
 
         protected virtual void Die()

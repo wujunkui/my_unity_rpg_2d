@@ -24,6 +24,7 @@ namespace Enemy
         public override void Exit()
         {
             enemyBase.anim.SetBool(animBoolName, false);
+            enemyBase.AssignLastAnimName(animBoolName);
             
         }
 

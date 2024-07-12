@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Core;
 using UnityEngine;
 
 namespace Player
@@ -45,6 +46,7 @@ namespace Player
         public PlayerCounterAttackState counterAttack { get; private set; }
         public PlayerAimSwordState aimSwordState { get; private set; }
         public PlayerCatchSwordState catchSwordState { get; private set; }
+        public PlayerDeadState deadState { get; private set; }
         
         protected override void Awake()
         {
@@ -62,6 +64,7 @@ namespace Player
             counterAttack = new PlayerCounterAttackState(this, stateMachine, "CounterAttack");
             aimSwordState = new PlayerAimSwordState(this, stateMachine, "AimSword");
             catchSwordState = new PlayerCatchSwordState(this, stateMachine, "CatchSword");
+            deadState = new PlayerDeadState(this, stateMachine, "Die");
         }
 
         protected override void Start()
@@ -112,7 +115,11 @@ namespace Player
         }
 
         public void AnimationTrigger() => stateMachine.currentState.AnimationFinishTrigger();
-        
 
+        public override void Die()
+        {
+            base.Die();
+            stateMachine.ChangeState(deadState);
+        }
     }
 }

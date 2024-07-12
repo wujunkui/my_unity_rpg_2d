@@ -23,7 +23,8 @@ namespace Enemy
         public float attackDistance = 1.5f;
         public float attackCooldown;
         [HideInInspector] public float lastAttackTime;
-        
+
+        public string lastAnimName { get; private set; }
         public EnemyStateMachine stateMachine { get; private set; }
         protected override void Awake()
         {
@@ -72,5 +73,11 @@ namespace Enemy
             Gizmos.color = Color.yellow; 
             Gizmos.DrawLine(wallCheck.position, new Vector3(wallCheck.position.x + facingDirection * attackDistance, wallCheck.position.y));
         }
+
+        public virtual void AssignLastAnimName(string _animBoolName)
+        {
+            lastAnimName = _animBoolName;
+        }
+        
     }
 }

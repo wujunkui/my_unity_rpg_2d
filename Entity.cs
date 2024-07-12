@@ -31,6 +31,8 @@ public class Entity : MonoBehaviour
     [SerializeField] protected Transform wallCheck;
     [SerializeField] protected float wallCheckDistance;
 
+    public System.Action onFlipped;
+    
     protected virtual void Awake()
     {
         
@@ -52,9 +54,10 @@ public class Entity : MonoBehaviour
     }
 
 
-    public virtual void Damage()
+    public virtual void DamageEffect()
     {
         fx.StartCoroutine("FlashFX");
+        StartCoroutine("HitKnockback");
     }
 
     protected virtual IEnumerator HitKnockback()
@@ -95,6 +98,7 @@ public class Entity : MonoBehaviour
         facingDirection *= -1;
         facingRight = !facingRight;
         transform.Rotate(0, 180, 0);
+        onFlipped?.Invoke();
     }
 
     public virtual void FlipController(float _x)
@@ -120,5 +124,11 @@ public class Entity : MonoBehaviour
     }
         
     #endregion
+
+
+    public virtual void Die()
+    {
+        
+    }
     
 }
