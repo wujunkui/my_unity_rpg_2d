@@ -1,3 +1,5 @@
+using Enemy;
+using Stats;
 using UnityEngine;
 
 namespace Player
@@ -16,7 +18,12 @@ namespace Player
             foreach (var hit in colliders)
             {
                 var enemy = hit.GetComponent<Enemy.Enemy>();
-                if(enemy != null) enemy.Damage();
+                if(enemy != null)
+                {
+                    EnemyStats target = hit.GetComponent<EnemyStats>();
+                    player.stats.DoDamage(target);
+                }
+                
             }
         }
 

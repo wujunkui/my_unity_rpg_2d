@@ -1,3 +1,4 @@
+using Stats;
 using UnityEngine;
 
 namespace Enemy.Skeleton
@@ -17,7 +18,11 @@ namespace Enemy.Skeleton
             foreach (var hit in colliders)
             {
                 var player = hit.GetComponent<Player.Player>();
-                if(player != null) player.Damage();
+                if(player != null)
+                {
+                    hit.GetComponent<CharacterStats>().TakeDamage(enemy.stats.damage.GetValue());
+                    player.Damage();
+                }
             }
         }
 

@@ -6,7 +6,8 @@ using UnityEngine;
     public class SkillManager : MonoBehaviour
     {
         public static SkillManager instance;
-
+        
+        public DashSkill dash { get; private set; }
         public SwordSkill sword { get; private set; }
 
         private void Awake()
@@ -20,5 +21,6 @@ using UnityEngine;
         private void Start()
         {
             sword = GetComponent<SwordSkill>();
+            dash = GetComponent<DashSkill>();
         }
     }

@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using Stats;
 using UnityEngine;
 
 
@@ -7,7 +8,7 @@ public class Entity : MonoBehaviour
 { 
     public Animator anim { get; private set; }
     protected SpriteRenderer sr { get; private set; }
-
+    public CharacterStats stats { get; private set; }
     public EntityFX fx; 
     
     public int facingDirection { get; private set; } = 1;
@@ -42,7 +43,7 @@ public class Entity : MonoBehaviour
         sr = GetComponentInChildren<SpriteRenderer>();
         rb = GetComponent<Rigidbody2D>();
         cd = GetComponent<CapsuleCollider2D>();
-  
+        stats = GetComponent<CharacterStats>();
     }
 
     protected virtual void Update()

@@ -1,3 +1,4 @@
+using Skills;
 using UnityEngine;
 
 namespace Player
@@ -21,7 +22,7 @@ namespace Player
         public override void Update()
         {
             base.Update();
-            if(Input.GetKeyDown(KeyCode.Mouse1))
+            if(Input.GetKeyDown(KeyCode.Mouse1) && HasNoSword())
                 stateMachine.ChangeState(player.aimSwordState);
             if (Input.GetKeyDown(KeyCode.Q))
                 stateMachine.ChangeState(player.counterAttack);
@@ -33,5 +34,13 @@ namespace Player
                 stateMachine.ChangeState(player.jumpState);
             
         }
+
+        private bool HasNoSword()
+        {
+            if (!player.sword) return true;
+            player.sword.GetComponent<SwordSkillController>().ReturnSword();
+            return false;
+        }
+        
     }
 }

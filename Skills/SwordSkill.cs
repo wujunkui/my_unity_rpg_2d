@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Serialization;
 
 
 namespace Skills
@@ -8,6 +9,7 @@ namespace Skills
         [SerializeField] private GameObject swordPrefab;
         [SerializeField] private Vector2 launchForce;
         [SerializeField] private float swordGravity;
+        [FormerlySerializedAs("returnDurantion")] [SerializeField] private float returnSpeed = 1;
 
 
         private Vector2 finalDir;
@@ -49,7 +51,8 @@ namespace Skills
             GameObject newSword = Instantiate(swordPrefab, player.transform.position, transform.rotation);
             SwordSkillController newSwordScript = newSword.GetComponent<SwordSkillController>();
 
-            newSwordScript.SetupSword(finalDir, swordGravity);
+            newSwordScript.SetupSword(finalDir, swordGravity, player, returnSpeed);
+            player.AssignNewSword(newSword);
             DotsActive(false);
         }
 

@@ -24,12 +24,15 @@ namespace Player
         public float dashDir;
         public float dashSpeed = 12f;
         public float dashDuration = 1f;
-        [SerializeField] 
-        private float dashCooldown;
+        [SerializeField] private float dashCooldown;
         private float dashUsageTimer;
+
+        public float swordCatchImpact;
 
         public SkillManager skill;
 
+        public GameObject sword;
+        
         public PlayerStateMachine stateMachine { get; private set; }
         public PlayerIdleState idleState { get; private set; }
         public PlayerMoveState moveState { get; private set; }
@@ -80,6 +83,18 @@ namespace Player
             yield return new WaitForSeconds(_seconds);
             isBusy = false;
         }
+
+        public void AssignNewSword(GameObject _newSword)
+        {
+            sword = _newSword;
+        }
+
+        public void CatchTheSword()
+        {
+            stateMachine.ChangeState(catchSwordState);
+            Destroy(sword);
+        }
+        
 
 
 
