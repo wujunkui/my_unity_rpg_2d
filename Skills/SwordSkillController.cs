@@ -33,6 +33,8 @@ namespace Skills
         public void ReturnSword()
         {
             rb.constraints = RigidbodyConstraints2D.FreezeAll;
+            anim.SetBool("Rotation", true); // 喜欢回来的时候也转起来，酷
+            // anim.CrossFade("SwordFlip", 0);
             // rb.isKinematic = false;
             transform.parent = null;
             isReturning = true;
@@ -47,8 +49,6 @@ namespace Skills
             {
                 transform.position = Vector2.MoveTowards(transform.position, player.transform.position,
                     returnSpeed * Time.deltaTime);
-                // transform.position = Vector2.SmoothDamp(transform.position, player.transform.position, ref currentVelocity,
-                //     returnDuration);
                 if(Vector2.Distance(transform.position, player.transform.position) < 1)
                     player.CatchTheSword();
             }

@@ -25,6 +25,10 @@ namespace Player
         public override void Update()
         {
             base.Update();
+            if (Input.GetKeyDown(KeyCode.Mouse0))
+            {
+                stateMachine.ChangeState(player.airAttackState);
+            }
             player.SetVelocity(xInput * player.moveSpeed, player.rb.velocity.y);
             if (rb.velocity.y < 0)
                 stateMachine.ChangeState(player.airState);

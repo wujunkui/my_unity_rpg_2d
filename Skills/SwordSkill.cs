@@ -88,7 +88,7 @@ namespace Skills
             // 传说中的抛物线公式？
             Vector2 position = (Vector2)player.transform.position +
                                new Vector2(aimDir.x * launchForce.x, aimDir.y * launchForce.y) * t +
-                               .5f * (Physics2D.gravity * swordGravity) * (t * t);
+                               (Physics2D.gravity * swordGravity) * (t * t) * 0.5f;
             return position;
         }
     }

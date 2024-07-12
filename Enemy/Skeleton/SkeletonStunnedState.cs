@@ -15,8 +15,8 @@ namespace Enemy.Skeleton
             
             enemy.fx.InvokeRepeating("RedColorBlink", 0, .1f);
             stateTimer = enemy.stunDuration;
-            enemy.rb.velocity = new Vector2(-enemy.facingDirection * enemy.stunDirection.x, enemy.stunDirection.y);
-            // enemy.SetVelocity(-enemy.facingDirection * enemy.stunDirection.x, enemy.stunDirection.y);
+            // enemy.rb.velocity = new Vector2(-enemy.facingDirection * enemy.stunDirection.x, enemy.stunDirection.y);
+            enemy.SetVelocity(-enemy.facingDirection * enemy.stunDirection.x, enemy.stunDirection.y, false);
         }
 
         public override void Exit()

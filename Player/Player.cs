@@ -48,6 +48,8 @@ namespace Player
         public PlayerCatchSwordState catchSwordState { get; private set; }
         public PlayerDeadState deadState { get; private set; }
         
+        public PlayerAirAttackState airAttackState { get; private set; }
+        
         protected override void Awake()
         {
             base.Awake();
@@ -65,6 +67,13 @@ namespace Player
             aimSwordState = new PlayerAimSwordState(this, stateMachine, "AimSword");
             catchSwordState = new PlayerCatchSwordState(this, stateMachine, "CatchSword");
             deadState = new PlayerDeadState(this, stateMachine, "Die");
+            // airAttackState = new PlayerAirAttackState(this, stateMachine, "AirAttack");
+            airAttackState = CreateNewState<PlayerAirAttackState>("AirAttack");
+        }
+
+        protected virtual TState CreateNewState<TState>(string _animName)
+        {
+            return (TState)Activator.CreateInstance(typeof(TState), this, stateMachine, _animName);
         }
 
         protected override void Start()
