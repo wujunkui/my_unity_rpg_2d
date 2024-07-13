@@ -22,7 +22,7 @@ namespace Player
         {
             base.Update();
             if(stateTimer < 0)
-                stateMachine.ChangeState(player.airState);
+                stateMachine.ChangeState(player.fallState);
             if(player.IsGroundedDetected())
                 stateMachine.ChangeState(player.idleState);
         }

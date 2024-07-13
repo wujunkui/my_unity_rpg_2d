@@ -10,7 +10,14 @@ namespace Stats
         public int currentHealth;
 
         public System.Action onHealthChange;
-        
+
+        protected EntityFX fx;
+
+        private void Awake()
+        {
+            fx = GetComponent<EntityFX>();
+        }
+
         protected virtual void Start()
         {
             currentHealth = maxHealth.GetValue();
@@ -21,6 +28,7 @@ namespace Stats
         {
             int totalDamage = damage.GetValue();
             _targetStats.TakeDamage(totalDamage);
+            fx.CreateHitFx(_targetStats.transform);
         }
         
         /// <summary>
@@ -34,9 +42,16 @@ namespace Stats
                 Die();
         }
 
+        protected virtual void PopBeHurtText(int _damage)
+        {
+            fx.CreatePopUpText(_damage.ToString());
+        }
+
         protected virtual void DecreaseHealthBy(int _damage)
         {
             currentHealth -= _damage;
+            if (_damage > 0)
+                PopBeHurtText(_damage);
             onHealthChange?.Invoke();
         }
 

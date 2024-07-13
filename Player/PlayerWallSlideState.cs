@@ -28,7 +28,7 @@ namespace Player
             }
             rb.velocity = yInput < 0 ? new Vector2(0, rb.velocity.y ) : new Vector2(0, rb.velocity.y * .7f);
             if (!player.IsWallDetected())
-                stateMachine.ChangeState(player.airState);
+                stateMachine.ChangeState(player.fallState);
             if (xInput != 0 && player.facingDirection != xInput)
             {
                 stateMachine.ChangeState(player.idleState);

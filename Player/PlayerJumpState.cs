@@ -31,7 +31,7 @@ namespace Player
             }
             player.SetVelocity(xInput * player.moveSpeed, player.rb.velocity.y);
             if (rb.velocity.y < 0)
-                stateMachine.ChangeState(player.airState);
+                stateMachine.ChangeState(player.fallState);
         }
     }
 

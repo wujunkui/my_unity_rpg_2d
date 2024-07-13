@@ -4,9 +4,9 @@ using UnityEngine;
 
 namespace Player
 {
-    public class PlayerAirState : PlayerState
+    public class PlayerFallState : PlayerState
     {
-        public PlayerAirState(Player _player, PlayerStateMachine _stateMachine, string _AnimBoolName) : base(_player,
+        public PlayerFallState(Player _player, PlayerStateMachine _stateMachine, string _AnimBoolName) : base(_player,
             _stateMachine, _AnimBoolName)
         {
         }

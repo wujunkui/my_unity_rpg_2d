@@ -29,7 +29,7 @@ namespace Player
             if (Input.GetKeyDown(KeyCode.J) || Input.GetKey(KeyCode.Mouse0))
                 stateMachine.ChangeState(player.primaryAttack);
             if (!player.IsGroundedDetected())
-                stateMachine.ChangeState(player.airState);
+                stateMachine.ChangeState(player.fallState);
             if (Input.GetButton("Jump") && player.IsGroundedDetected())
                 stateMachine.ChangeState(player.jumpState);
             

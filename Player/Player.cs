@@ -8,7 +8,10 @@ namespace Player
 {
     public class Player : Entity
     {
-
+        
+        [Header("PopUp Text")]
+        
+        
         [Header("Attack details")] 
         public Vector2[] attackMovements;
 
@@ -38,7 +41,7 @@ namespace Player
         public PlayerIdleState idleState { get; private set; }
         public PlayerMoveState moveState { get; private set; }
         public PlayerJumpState jumpState { get; private set; }
-        public PlayerAirState airState { get; private set; }
+        public PlayerFallState fallState { get; private set; }
         public PlayerDashState dashState { get; private set; }
         public PlayerWallSlideState wallSlideState { get; private set; }
         public PlayerWallJumpState wallJumpState { get; private set; }
@@ -58,7 +61,7 @@ namespace Player
             idleState = new PlayerIdleState(this, stateMachine, "Idle");
             moveState = new PlayerMoveState(this, stateMachine, "Move");
             jumpState = new PlayerJumpState(this, stateMachine, "Jump");
-            airState = new PlayerAirState(this, stateMachine, "Jump");
+            fallState = new PlayerFallState(this, stateMachine, "Jump");
             dashState = new PlayerDashState(this, stateMachine, "Dash");
             wallSlideState = new PlayerWallSlideState(this, stateMachine, "WallSlide");
             wallJumpState = new PlayerWallJumpState(this, stateMachine, "Jump");
@@ -71,7 +74,7 @@ namespace Player
             airAttackState = CreateNewState<PlayerAirAttackState>("AirAttack");
         }
 
-        protected virtual TState CreateNewState<TState>(string _animName)
+        protected virtual TState CreateNewState<TState>(string _animName) where TState: PlayerState
         {
             return (TState)Activator.CreateInstance(typeof(TState), this, stateMachine, _animName);
         }

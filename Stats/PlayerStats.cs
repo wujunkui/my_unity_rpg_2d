@@ -1,4 +1,6 @@
 
+using UnityEngine;
+
 namespace Stats
 {
     public class PlayerStats: CharacterStats
@@ -21,6 +23,11 @@ namespace Stats
         {
             base.Die();
             player.Die();
+        }
+
+        protected override void PopBeHurtText(int _damage)
+        {
+            fx.CreatePopUpText(_damage.ToString(), Color.yellow);
         }
     }
 }
