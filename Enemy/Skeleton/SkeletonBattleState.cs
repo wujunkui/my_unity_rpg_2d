@@ -21,8 +21,7 @@ namespace Enemy.Skeleton
         {
             base.Exit();
         }
-
-        // ReSharper disable Unity.PerformanceAnalysis
+        
         public override void Update()
         {
             base.Update();
@@ -30,18 +29,11 @@ namespace Enemy.Skeleton
             var playerDetected = enemy.IsPlayerDetected();
             if (playerDetected)
             {
-                stateTimer = enemy.battleTime;
-                if (playerDetected.distance < enemy.attackDistance)
-                {
-                    if(CanAttack())
-                        stateMachine.ChangeState(enemy.attackState);
-                    
-                    
-                } 
+                AttackPlayer(playerDetected);
             }
             else
             {
-                if(stateTimer < 0)
+                if(stateTimer < 0 || !enemy.IsGroundedDetected())
                     stateMachine.ChangeState(enemy.idleState);
             }
             
@@ -53,6 +45,18 @@ namespace Enemy.Skeleton
                 return;
       
             enemy.SetVelocity(enemy.moveSpeed * moveDir, rb.velocity.y);
+        }
+
+        private void AttackPlayer(RaycastHit2D playerDetected)
+        {
+            stateTimer = enemy.battleTime;
+            if (playerDetected.distance < enemy.attackDistance)
+            {
+                if(CanAttack())
+                    stateMachine.ChangeState(enemy.attackState);
+                    
+                    
+            }
         }
 
         private bool CanAttack()

@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Player
 {
-    public class PlayerJumpState : PlayerState
+    public class PlayerJumpState : PlayerAirState
     {
         public PlayerJumpState(Player _player, PlayerStateMachine _stateMachine, string _AnimBoolName) : base(_player,
             _stateMachine, _AnimBoolName)
@@ -25,11 +25,6 @@ namespace Player
         public override void Update()
         {
             base.Update();
-            if (Input.GetKeyDown(KeyCode.Mouse0))
-            {
-                stateMachine.ChangeState(player.airAttackState);
-            }
-            player.SetVelocity(xInput * player.moveSpeed, player.rb.velocity.y);
             if (rb.velocity.y < 0)
                 stateMachine.ChangeState(player.fallState);
         }

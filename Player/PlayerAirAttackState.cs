@@ -19,6 +19,7 @@ namespace Player
             base.Update();
             if(player.IsGroundedDetected())
                 player.SetZeroVelocity();
+                // stateMachine.ChangeState(player.idleState);
             if(triggerCalled)
                 stateMachine.ChangeState(player.idleState);
         }
