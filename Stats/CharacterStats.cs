@@ -55,11 +55,19 @@ namespace Stats
             fx.CreatePopUpText(_damage.ToString());
         }
 
-        protected virtual void DecreaseHealthBy(int _damage)
+        public virtual void DecreaseHealthBy(int _damage)
         {
             currentHealth -= _damage;
             if (_damage > 0)
                 PopBeHurtText(_damage);
+            onHealthChange?.Invoke();
+        }
+
+        public virtual void IncreaseHealthBy(int _incrHP)
+        {
+            currentHealth += _incrHP;
+            if (currentHealth > maxHealth.GetValue())
+                currentHealth = maxHealth.GetValue();
             onHealthChange?.Invoke();
         }
 

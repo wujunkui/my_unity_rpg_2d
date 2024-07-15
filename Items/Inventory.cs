@@ -9,12 +9,14 @@ namespace Items
     {
         public static Inventory instance;
 
+        public List<ItemData> startingEquipments = new();
+        
         public List<InventoryItem> equipments = new ();
         public Dictionary<ItemData_Equipment, InventoryItem> equipmentDict = new();
         
         public List<InventoryItem> inventoryItems = new List<InventoryItem>();
         public Dictionary<ItemData, InventoryItem> inventoryDict = new();
-
+        
         public List<InventoryItem> stash = new();
         public Dictionary<ItemData, InventoryItem> stashDict = new();
 
@@ -40,6 +42,15 @@ namespace Items
             inventoryItemSlots = inventorySlotParent.GetComponentsInChildren<UI_ItemSlot>();
             stashItemSlots = stashSlotParent.GetComponentsInChildren<UI_ItemSlot>();
             equipmentSlots = equipmentSlotParent.GetComponentsInChildren<UI_EquipmentSlot>();
+            InitInventory();
+        }
+
+        private void InitInventory()
+        {
+            foreach (var equipment in startingEquipments)
+            {
+                AddItem(equipment);
+            }
         }
 
         public void EquipItem(ItemData _item)
@@ -182,6 +193,22 @@ namespace Items
 
             UpdateSlotUI();
 
+        }
+
+        public List<InventoryItem> GetEquipmentList() => equipments;
+
+        public List<InventoryItem> GetStashList() => stash;
+
+        public ItemData_Equipment GetEquipment(EquipmentType _type)
+        {
+            ItemData_Equipment equipmentItem = null;
+            foreach (var item in equipmentDict)
+            {
+                if (item.Key.equipmentType == _type)
+                    equipmentItem = item.Key;
+            }
+
+            return equipmentItem;
         }
     }
 }

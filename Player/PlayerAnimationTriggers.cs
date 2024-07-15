@@ -1,4 +1,3 @@
-using Enemy;
 using Stats;
 using UnityEngine;
 
@@ -21,7 +20,8 @@ namespace Player
                 if(enemy != null)
                 {
                     EnemyStats target = hit.GetComponent<EnemyStats>();
-                    player.stats.DoDamage(target);
+                    player.stats.DoDamage(target); 
+                    
                 }
                 
             }

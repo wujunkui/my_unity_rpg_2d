@@ -1,3 +1,4 @@
+using Items.Effects;
 using Stats;
 using UnityEngine;
 
@@ -15,8 +16,9 @@ namespace Items
     {
         public EquipmentType equipmentType;
 
-        public int damage;
+        public ItemEffect[] itemEffects;
         
+        public int damage;
         public int critChance;
         public int critDamage;
 
@@ -47,6 +49,14 @@ namespace Items
             playerStats.evasion.RemoveModifier(evasion);
             playerStats.critChance.RemoveModifier(critChance);
             playerStats.critDamage.RemoveModifier(critDamage);
+        }
+
+        public void ExecuteEffect(int _damage)
+        {
+            foreach (var itemEffect in itemEffects)
+            {
+                itemEffect.ExecuteEffect(_damage);
+            }
         }
     }
 }

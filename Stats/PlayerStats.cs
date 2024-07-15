@@ -19,6 +19,13 @@ namespace Stats
             player.DamageEffect();
         }
 
+        public override void DoDamage(CharacterStats _targetStats)
+        {
+            base.DoDamage(_targetStats);
+            int totalDamage = damage.GetValue();
+            Items.Inventory.instance.GetEquipment(EquipmentType.Weapon).ExecuteEffect(totalDamage);
+        }
+
         protected override void Die()
         {
             base.Die();
@@ -28,6 +35,11 @@ namespace Stats
         protected override void PopBeHurtText(int _damage)
         {
             fx.CreatePopUpText(_damage.ToString(), Color.yellow);
+        }
+
+        public void PopHealText(int _healPoint)
+        {
+            fx.CreatePopUpText($"+{_healPoint}", Color.green);
         }
     }
 }
