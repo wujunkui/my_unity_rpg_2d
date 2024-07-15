@@ -8,7 +8,15 @@ namespace Stats
         public Stat maxHealth;
 
         public int currentHealth;
-
+        
+        public Stat critChance;
+        // 暴击伤害，这里是提升的百分比
+        public Stat critDamage;
+        
+        public Stat armor;
+        // 闪避
+        public Stat evasion;
+        
         public System.Action onHealthChange;
 
         protected EntityFX fx;
