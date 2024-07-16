@@ -23,7 +23,7 @@ namespace Stats
         {
             base.DoDamage(_targetStats);
             int totalDamage = damage.GetValue();
-            Items.Inventory.instance.GetEquipment(EquipmentType.Weapon).ExecuteEffect(totalDamage);
+            Items.Inventory.instance.GetEquipment(EquipmentType.Weapon)?.ExecuteEffect(totalDamage);
         }
 
         protected override void Die()
