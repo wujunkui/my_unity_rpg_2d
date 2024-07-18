@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 namespace Items
 {
@@ -8,6 +9,11 @@ namespace Items
         [SerializeField] private Rigidbody2D rb;
         [SerializeField] private ItemData itemData;
         private SpriteRenderer sr;
+
+        private void OnValidate()
+        {
+            SetupVisual();
+        }
 
         private void SetupVisual()
         {
@@ -27,6 +33,12 @@ namespace Items
         
         public void PickUpItem()
         {
+            if(!Inventory.instance.CanAddItem() && itemData.itemType == ItemType.Equipment)
+            {
+                // 装备栏满了捡不起来就抖动一下
+                rb.velocity = new Vector2(0, Random.Range(7, 10));
+                return;
+            }
             Inventory.instance.AddItem(itemData);
             Destroy(gameObject);
         }

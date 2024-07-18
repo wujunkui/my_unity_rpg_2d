@@ -7,7 +7,7 @@ using UnityEngine.EventSystems;
 
 namespace UI
 {
-    public class UI_ItemSlot : MonoBehaviour, IPointerDownHandler
+    public class UI_ItemSlot : MonoBehaviour, IPointerDownHandler, IPointerEnterHandler, IPointerExitHandler
     {
         [SerializeField] private Image itemImage;
         [SerializeField] private TextMeshProUGUI itemText;
@@ -40,6 +40,26 @@ namespace UI
             if(item.data.itemType != ItemType.Equipment)
                 return;
             Inventory.instance.EquipItem(item.data);
+        }
+
+        public void OnPointerEnter(PointerEventData eventData)
+        {
+            
+        }
+
+        public void OnPointerExit(PointerEventData eventData)
+        {
+            
+        }
+
+        public void ShowItemInfo()
+        {
+            
+        }
+
+        public void HideItemInfo()
+        {
+            
         }
     }
 }

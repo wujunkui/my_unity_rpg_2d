@@ -15,19 +15,24 @@ namespace Items
     public class ItemData_Equipment: ItemData
     {
         public EquipmentType equipmentType;
-
+        
         public ItemEffect[] itemEffects;
         
         public int damage;
         public int critChance;
         public int critDamage;
 
-
         public int health;
 
         public int armor;
         // 闪避
         public int evasion;
+
+        public ItemData_Equipment()
+        {
+            itemType = ItemType.Equipment;
+        }
+
         public void AddModifies()
         {
             PlayerStats playerStats = PlayerManager.instance.player.GetComponent<PlayerStats>();

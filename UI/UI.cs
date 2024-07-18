@@ -6,10 +6,11 @@ namespace UI
     {
         [SerializeField] private Transform header;
         [SerializeField] private Transform contentParent;
-        
+
+        public ItemToolTip itemToolTip;
         public void SwitchTo(GameObject _menu)
         {
-            for (int i = 0; i < transform.childCount; i++)
+            for (int i = 0; i < contentParent.childCount; i++)
             {
                 contentParent.GetChild(i).gameObject.SetActive(false);
             }
