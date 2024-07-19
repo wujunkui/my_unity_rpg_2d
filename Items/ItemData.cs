@@ -15,7 +15,9 @@ namespace Items
         public ItemType itemType;
         public string itemName;
         public string itemNameCh;
+        public string itemDesc;
         public Sprite icon;
+        
 
         [Range(0, 100)]
         public int dropChance;

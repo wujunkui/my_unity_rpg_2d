@@ -10,13 +10,13 @@ namespace UI
         [SerializeField] private float yOffset = 150;
         
         
-        public virtual void AdjustPosition()
+        public virtual void AdjustPosition(Vector2 position)
         {
-            Vector2 mousePosition = Input.mousePosition;
-            float newXOffset = mousePosition.x > 600 ? -xOffset : xOffset;
-            float newYOffset = mousePosition.y > 320 ? -yOffset : yOffset;
-            transform.position = new Vector3(mousePosition.x + newXOffset, mousePosition.y + newYOffset);
+            float newXOffset = position.x > xLimit ? -xOffset : xOffset;
+            float newYOffset = position.y > yLimit ? -yOffset : yOffset;
+            transform.position = new Vector3(position.x + newXOffset, position.y + newYOffset);
         }
+        
         
         public virtual void HideToolTip() => gameObject.SetActive(false);
     }
