@@ -34,7 +34,7 @@ namespace UI
             AdjustPosition(position);
             itemNameText.text = item.itemNameCh;
             itemTypeText.text = equipmentZhNameDict[item.equipmentType];
-            itemDescription.text = GetItemDesc(item);
+            itemDescription.text = item.GetDescription();
             gameObject.SetActive(true);
         }
     }

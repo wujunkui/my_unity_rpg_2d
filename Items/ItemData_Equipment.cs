@@ -63,5 +63,26 @@ namespace Items
                 itemEffect.ExecuteEffect(_damage);
             }
         }
+
+        public override string GetDescription()
+        {
+            sb.Length = 0;
+            AddItemDescription(damage, "伤害");
+            AddItemDescription(critChance, "暴击");
+            AddItemDescription(critDamage, "暴击伤害");
+            AddItemDescription(health, "最大血量");
+            return sb.ToString();
+        }
+
+        private void AddItemDescription(int _value, string _name)
+        {
+            if (_value != 0)
+            {
+                if (sb.Length > 0)
+                    sb.AppendLine();
+                if (_value > 0)
+                    sb.Append("+ " + _value + "  "  + _name);
+            }
+        }
     }
 }

@@ -75,6 +75,11 @@ namespace Stats
         {
         
         }
+
+        public int GetMaxHealthValue()
+        {
+            return maxHealth.GetValue();
+        }
     
     }
 }

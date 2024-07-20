@@ -1,3 +1,4 @@
+using System.Text;
 using UnityEngine;
 
 
@@ -21,5 +22,12 @@ namespace Items
 
         [Range(0, 100)]
         public int dropChance;
+
+        protected StringBuilder sb = new StringBuilder();
+
+        public virtual string GetDescription()
+        {
+            return "";
+        }
     }
 }
