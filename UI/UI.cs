@@ -1,22 +1,71 @@
+using System;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace UI
 {
     public class UI : MonoBehaviour
     {
-        [SerializeField] private Transform header;
-        [SerializeField] private Transform contentParent;
-
+        [SerializeField] private GameObject mainUI;
+        [SerializeField] private GameObject contentParent;
+        [SerializeField] private GameObject inGameUI;
         public ItemToolTip itemToolTip;
+        private bool mainUIActive;
+
+        private void Start()
+        {
+            OpenInGameUI();
+        }
+
+        private void Update()
+        {
+            if(!Input.GetKeyDown(KeyCode.Escape))
+                return;
+            SwitchUi();
+        }
+
+        private void SwitchUi()
+        {
+            if(!mainUIActive)
+            {
+                OpenMainUI();
+            }
+            else
+            {
+                OpenInGameUI();
+            }
+        }
+
+        private void OpenInGameUI()
+        {
+            mainUI.SetActive(false);
+            mainUIActive = false;
+            inGameUI.SetActive(true);
+        }
+
+        private void OpenMainUI()
+        {
+            inGameUI.SetActive(false);
+            mainUI.SetActive(true);
+            for (int i = 0; i < mainUI.transform.childCount; i++)
+            {
+                mainUI.transform.GetChild(i).gameObject.SetActive(true);
+            }
+            SwitchTo(contentParent.transform.GetChild(0).gameObject);
+            mainUIActive = true;
+        }
+
         public void SwitchTo(GameObject _menu)
         {
-            for (int i = 0; i < contentParent.childCount; i++)
+            for (int i = 0; i < contentParent.transform.childCount; i++)
             {
-                contentParent.GetChild(i).gameObject.SetActive(false);
+                contentParent.transform.GetChild(i).gameObject.SetActive(false);
             }
 
-            if (_menu != null)
-                _menu.SetActive(true);
+            
+            _menu?.SetActive(true);
+            
+
         }
     }
 }

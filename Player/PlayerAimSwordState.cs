@@ -1,5 +1,6 @@
 using Player;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 namespace Player
 {
@@ -24,10 +25,10 @@ namespace Player
         {
             base.Update();
             player.SetZeroVelocity();
-            if(Input.GetKeyUp(KeyCode.Mouse1))
+            if(player.inputActions.Aim.WasReleasedThisFrame())
                 stateMachine.ChangeState(player.idleState);
 
-            Vector2 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            Vector2 mousePosition = Camera.main.ScreenToWorldPoint(Mouse.current.position.ReadValue());
             if(player.transform.position.x > mousePosition.x && player.facingDirection == 1)
                 player.Flip();
             else if (player.transform.position.x < mousePosition.x && player.facingDirection == -1)

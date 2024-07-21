@@ -22,7 +22,7 @@ namespace Player
         public override void Update()
         {
             base.Update();
-            if(Input.GetKeyDown(KeyCode.Mouse1) && HasNoSword())
+            if(player.inputActions.Aim.WasPerformedThisFrame() && HasNoSword())
                 stateMachine.ChangeState(player.aimSwordState);
             if (player.inputActions.CounterAttack.WasPressedThisFrame())
                 stateMachine.ChangeState(player.counterAttack);

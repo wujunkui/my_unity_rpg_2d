@@ -11,7 +11,7 @@ namespace Player
         public override void Update()
         {
             base.Update();
-            if (Input.GetKeyDown(KeyCode.Mouse0))
+            if (player.inputActions.Attack.WasPressedThisFrame())
             {
                 stateMachine.ChangeState(player.airAttackState);
             }
