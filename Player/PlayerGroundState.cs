@@ -24,13 +24,13 @@ namespace Player
             base.Update();
             if(Input.GetKeyDown(KeyCode.Mouse1) && HasNoSword())
                 stateMachine.ChangeState(player.aimSwordState);
-            if (Input.GetKeyDown(KeyCode.Q))
+            if (player.inputActions.CounterAttack.WasPressedThisFrame())
                 stateMachine.ChangeState(player.counterAttack);
-            if (Input.GetKeyDown(KeyCode.J) || Input.GetKey(KeyCode.Mouse0))
+            if (player.inputActions.Attack.WasPressedThisFrame())
                 stateMachine.ChangeState(player.primaryAttack);
             if (!player.IsGroundedDetected())
                 stateMachine.ChangeState(player.fallState);
-            if (Input.GetButton("Jump") && player.IsGroundedDetected())
+            if (player.inputActions.Jump.WasPressedThisFrame() && player.IsGroundedDetected())
                 stateMachine.ChangeState(player.jumpState);
             
         }

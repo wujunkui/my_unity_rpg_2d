@@ -36,9 +36,9 @@ namespace Player
 
         public virtual void Update()
         {
-            xInput = Input.GetAxisRaw("Horizontal");
-            yInput = Input.GetAxisRaw("Vertical");
-            
+            // xInput = Input.GetAxisRaw("Horizontal");
+            // yInput = Input.GetAxisRaw("Vertical");
+            SetInput();
             player.anim.SetFloat("yVelocity", rb.velocity.y);
             stateTimer -= Time.deltaTime;
         }
@@ -46,6 +46,14 @@ namespace Player
         public virtual void AnimationFinishTrigger()
         {
             triggerCalled = true;
+        }
+
+        protected void SetInput()
+        {
+            var _xInput = player.xInput;
+            var _yInput = player.yInput;
+            xInput = _xInput < -.5f ? -1 : _xInput > .5f ? 1 : 0;
+            yInput = _yInput < -.5f ? -1 : _yInput > .5f ? 1 : 0;
         }
     }
 }

@@ -15,7 +15,7 @@ namespace Player
             {
                 stateMachine.ChangeState(player.airAttackState);
             }
-            if (player.IsWallDetected())
+            if (player.IsWallDetected() && xInput != 0)
                 stateMachine.ChangeState(player.wallSlideState);
 
 

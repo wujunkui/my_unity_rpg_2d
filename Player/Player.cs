@@ -1,8 +1,7 @@
 using System;
 using System.Collections;
-using System.Collections.Generic;
-using Core;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 namespace Player
 {
@@ -18,8 +17,10 @@ namespace Player
         public float counterAttackDuration = .2f;
         
         public bool isBusy;
-        
-        [Header("Move Info")] 
+
+        [Header("Move Info")]
+        public float xInput;
+        public float yInput;
         public float moveSpeed = 5f;
         public float jumpForce = 5f;
         public float wallSlideSpeed = 5f;
@@ -50,13 +51,18 @@ namespace Player
         public PlayerAimSwordState aimSwordState { get; private set; }
         public PlayerCatchSwordState catchSwordState { get; private set; }
         public PlayerDeadState deadState { get; private set; }
-        
         public PlayerAirAttackState airAttackState { get; private set; }
+
+        public PlayerControls.PlayerActions inputActions;
         
         protected override void Awake()
         {
             base.Awake();
             skill = SkillManager.instance;
+
+            inputActions = new PlayerControls().Player;
+            inputActions.Enable();
+            
             stateMachine = new PlayerStateMachine();
             idleState = new PlayerIdleState(this, stateMachine, "Idle");
             moveState = new PlayerMoveState(this, stateMachine, "Move");
@@ -117,10 +123,9 @@ namespace Player
         {
             dashUsageTimer -= Time.deltaTime;
             if (IsWallDetected()) return;
-            if (Input.GetKeyDown(KeyCode.LeftShift) && dashUsageTimer < 0)
+            if (inputActions.Dash.WasPressedThisFrame() && dashUsageTimer < 0)
             {
                 dashUsageTimer = dashCooldown;
-                var xInput = Input.GetAxisRaw("Horizontal");
                 dashDir = xInput != 0 ? xInput : facingDirection;
                 stateMachine.ChangeState(dashState);
             }
@@ -132,6 +137,12 @@ namespace Player
         {
             base.Die();
             stateMachine.ChangeState(deadState);
+        }
+
+        private void OnMove(InputValue value)
+        {
+            xInput = value.Get<Vector2>().x;
+            yInput = value.Get<Vector2>().y;
         }
     }
 }
