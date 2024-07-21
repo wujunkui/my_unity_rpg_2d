@@ -31,14 +31,15 @@ namespace Skills
         protected override void Update()
         {
             base.Update();
-            if (Input.GetKeyUp(KeyCode.Mouse1))
+            if (player.inputActions.Aim.WasReleasedThisFrame())
             {
                 Vector2 aimDir = AimDirection();
                 finalDir = new Vector2(aimDir.normalized.x * launchForce.x, aimDir.normalized.y * launchForce.y);
             }
 
-            if (Input.GetKey(KeyCode.Mouse1))
+            if (player.inputActions.Aim.IsInProgress())
             {
+                Debug.Log("Pressed still");
                 for (int i = 0; i < dots.Length; i++)
                 {
                     dots[i].transform.position = DotsPosition(i * spaceBetweenDots);
@@ -58,6 +59,8 @@ namespace Skills
 
         public Vector2 AimDirection()
         {
+            // Debug.Log(player.inputActions.AimDir.ReadValue<Vector2>());
+            // return player.inputActions.Look.ReadValue<Vector2>();
             Vector2 playerPosition = player.transform.position;
             Vector2 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             Vector2 direction = mousePosition - playerPosition;

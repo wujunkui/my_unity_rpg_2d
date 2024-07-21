@@ -21,7 +21,7 @@ namespace Player
         public override void Update()
         {
             base.Update();
-            if(Input.GetButton("Jump"))
+            if(player.inputActions.Jump.WasPressedThisFrame())
             {
                 stateMachine.ChangeState(player.wallJumpState);
                 return;
