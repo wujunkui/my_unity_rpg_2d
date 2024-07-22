@@ -116,9 +116,6 @@ namespace Player
             Destroy(sword);
         }
         
-
-
-
         private void CheckForDashInput()
         {
             dashUsageTimer -= Time.deltaTime;

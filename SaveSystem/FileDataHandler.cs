@@ -16,7 +16,7 @@ namespace SaveSystem
             dataFileName = _dataFileName;
         }
 
-        public void Save(GameObject _data)
+        public void Save(GameData _data)
         {
             string fullPath = Path.Combine(dataDirPath, dataFileName);
             try
@@ -60,6 +60,12 @@ namespace SaveSystem
             }
 
             return loadData;
+        }
+
+        public void Delete()
+        {
+            if(File.Exists(fullPath))
+                File.Delete(fullPath);
         }
     }
 }

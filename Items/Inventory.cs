@@ -1,11 +1,14 @@
 using System.Collections.Generic;
+using System.Linq;
+using SaveSystem;
 using UI;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.Serialization;
 
 namespace Items
 {
-    public class Inventory: MonoBehaviour
+    public class Inventory: MonoBehaviour, ISaveManager
     {
         public static Inventory instance;
 
@@ -27,6 +30,10 @@ namespace Items
         private UI_ItemSlot[] inventoryItemSlots;
         private UI_ItemSlot[] stashItemSlots;
         private UI_EquipmentSlot[] equipmentSlots;
+        
+        public List<InventoryItem> loadedItems;
+        public List<ItemData_Equipment> loadedEquipments;
+        
         private void Awake()
         {
             if (instance == null)
@@ -47,7 +54,26 @@ namespace Items
 
         private void InitInventory()
         {
-            foreach (var equipment in startingEquipments)
+            foreach (var equipment in loadedEquipments)
+            {
+                EquipItem(equipment);
+            }
+            
+            // 加载存档中的物品
+            if (loadedItems.Count > 0)
+            {
+                foreach (var item in loadedItems)
+                {
+                    for (int i = 0; i < item.stackSize; i++)
+                    {
+                        AddItem(item.data);
+                    }
+                }
+                return;
+            }
+            
+            // 没有存档的物品，证明是新开游戏，要添加初始道具
+            foreach (var equipment in startingEquipments.Where(equipment => equipment != null))
             {
                 AddItem(equipment);
             }
@@ -219,6 +245,77 @@ namespace Items
             }
 
             return equipmentItem;
+        }
+
+        public void LoadData(GameData _data)
+        {
+            foreach (var pair in _data.inventory)
+            {
+                foreach (var item in GetItemDatabase())
+                {
+                    if (item != null && item.itemID == pair.Key)
+                    {
+                        var itemToLoad = new InventoryItem(item);
+                        itemToLoad.stackSize = pair.Value;
+                        loadedItems.Add(itemToLoad);
+                    }
+                }
+            }
+
+            foreach (var loadedItemId in _data.equipmentIds)
+            {
+                foreach (var item in GetItemDatabase())
+                {
+                    if (item != null && loadedItemId == item.itemID)
+                    {
+                        loadedEquipments.Add(item as ItemData_Equipment);
+                    }
+                }
+            }
+            
+            
+        }
+
+        public void SaveData(ref GameData _data)
+        {
+            _data.inventory.Clear();
+            _data.equipmentIds.Clear();
+            foreach (var pair in inventoryDict)
+            {
+                _data.inventory.Add(pair.Key.itemID, pair.Value.stackSize);
+            }
+
+            AddToGameData(ref _data, ref stashDict);
+            // foreach (var pair in stashDict)
+            // {
+            //     _data.inventory.Add(pair.Key.itemID, pair.Value.stackSize);
+            // }
+            foreach (var pair in equipmentDict)
+            {
+                _data.equipmentIds.Add(pair.Key.itemID);
+            }
+        }
+
+        private static void AddToGameData(ref GameData _data, ref Dictionary<ItemData, InventoryItem> _dict)
+        {
+            foreach (var pair in _dict)
+            {
+                _data.inventory.Add(pair.Key.itemID, pair.Value.stackSize);
+            }
+        }
+
+        private List<ItemData> GetItemDatabase()
+        {
+            List<ItemData> itemDataBase = new();
+            string[] assetNames = AssetDatabase.FindAssets("", new[] { "Assets/Data/Items" });
+            foreach (var SOName in assetNames)
+            {
+                var SOPath = AssetDatabase.GUIDToAssetPath(SOName);
+                var itemData = AssetDatabase.LoadAssetAtPath<ItemData>(SOPath);
+                itemDataBase.Add(itemData);
+            }
+
+            return itemDataBase;
         }
     }
 }

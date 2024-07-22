@@ -7,9 +7,20 @@ namespace SaveSystem
 {
     public class SaveManager : MonoBehaviour
     {
-        private GameData gameData;
         public static SaveManager instance;
+        [SerializeField] private string fileName;
+        private GameData gameData;
         private List<ISaveManager> saveManagers;
+
+        private FileDataHandler dataHandler;
+        
+        [ContextMenu("Delete save file")]
+        private void DeleteSaveFile()
+        {
+            dataHandler = new FileDataHandler(Application.persistentDataPath, fileName);
+            dataHandler.Delete();
+        }
+        
         private void Awake()
         {
             // singleton
@@ -23,7 +34,8 @@ namespace SaveSystem
 
         private void Start()
         {
-            saveManagers = FinAllSaveManagers();
+            dataHandler = new FileDataHandler(Application.persistentDataPath, fileName);
+            saveManagers = FindAllSaveManagers();
             LoadGame();
         }
 
@@ -34,6 +46,7 @@ namespace SaveSystem
 
         public void LoadGame()
         {
+            gameData = dataHandler.Load();
             if (gameData == null)
             {
                 NewGame();
@@ -51,6 +64,7 @@ namespace SaveSystem
             {
                 saveManger.SaveData(ref gameData);
             }
+            dataHandler.Save(gameData);
         }
 
         private void OnApplicationQuit()
@@ -58,10 +72,12 @@ namespace SaveSystem
             SaveGame();
         }
 
-        private List<ISaveManager> FinAllSaveManagers()
+        private List<ISaveManager> FindAllSaveManagers()
         {
             IEnumerable<ISaveManager> _saveManagers = FindObjectsOfType<MonoBehaviour>().OfType<ISaveManager>();
             return new List<ISaveManager>(_saveManagers);
         }
+        
+        
     }
 }
