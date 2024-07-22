@@ -38,6 +38,7 @@ namespace UI
 
         private void OpenInGameUI()
         {
+            Time.timeScale = 1;
             mainUI.SetActive(false);
             mainUIActive = false;
             inGameUI.SetActive(true);
@@ -45,6 +46,7 @@ namespace UI
 
         private void OpenMainUI()
         {
+            Time.timeScale = 0;
             inGameUI.SetActive(false);
             mainUI.SetActive(true);
             for (int i = 0; i < mainUI.transform.childCount; i++)

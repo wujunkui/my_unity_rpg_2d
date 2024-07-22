@@ -36,7 +36,7 @@ namespace Stats
         {
             int totalDamage = damage.GetValue();
             _targetStats.TakeDamage(totalDamage);
-            fx.CreateHitFx(_targetStats.transform);
+            
         }
         
         /// <summary>
@@ -46,6 +46,7 @@ namespace Stats
         public virtual void TakeDamage(int _damage)
         {
             DecreaseHealthBy(_damage);
+            fx.CreateHitFx(transform);
             if(currentHealth <= 0)
                 Die();
         }

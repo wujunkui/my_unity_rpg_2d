@@ -1,4 +1,5 @@
 using System;
+using Stats;
 using UnityEngine;
 using UnityEngine.Serialization;
 
@@ -10,10 +11,13 @@ namespace Skills
         private Rigidbody2D rb;
         private CircleCollider2D cd;
         private Player.Player player;
+         
+        [SerializeField] private int pierceAmount;
 
         [SerializeField] private float returnSpeed = 1;
         private bool canRotate = true;
         private bool isReturning = false;
+        [SerializeField] private int swordDamage = 10;
         private void Awake()
         {
             anim = GetComponentInChildren<Animator>();
@@ -29,7 +33,11 @@ namespace Skills
             returnSpeed = _returnSpeed;
             anim.SetBool("Rotation", true);
         }
-        
+
+        public void SetupPierceSword(int _pierceAmount)
+        {
+            pierceAmount = _pierceAmount;
+        }
         public void ReturnSword()
         {
             rb.constraints = RigidbodyConstraints2D.FreezeAll;
@@ -58,11 +66,26 @@ namespace Skills
         {
             if (isReturning)
                 return;
+            
+            if (other.TryGetComponent(out Enemy.Enemy enemy))
+            {
+                enemy.GetComponent<CharacterStats>()?.TakeDamage(swordDamage);
+            }
+            StuckInto(other);
+        }
+
+        private void StuckInto(Collider2D other)
+        {
+            if (pierceAmount > 0 && other.GetComponent<Enemy.Enemy>() != null)
+            {
+                pierceAmount--;
+                return;
+            }
+            
             canRotate = false;
             cd.enabled = false;
             rb.isKinematic = true;
             rb.constraints = RigidbodyConstraints2D.FreezeAll;
-
             transform.parent = other.transform;
             anim.SetBool("Rotation", false);
         }

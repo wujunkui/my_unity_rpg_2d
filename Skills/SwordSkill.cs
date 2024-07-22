@@ -1,11 +1,26 @@
+using System;
 using UnityEngine;
 using UnityEngine.Serialization;
 
 
 namespace Skills
 {
+    public enum SwordType
+    {
+        Regular,
+        Bounce,
+        Pierce,
+        Spin
+    }
     public class SwordSkill : Skill
     {
+        [SerializeField] private SwordType swordType;
+        
+        [Header("Pierce Info")]
+        [SerializeField] private int pierceAmount;
+        [SerializeField] private float pierceGravity;
+        
+        [Header("Skill Info")]
         [SerializeField] private GameObject swordPrefab;
         [SerializeField] private Vector2 launchForce;
         [SerializeField] private float swordGravity;
@@ -26,6 +41,21 @@ namespace Skills
         {
             base.Start();
             GenerateDots();
+            SetupGravity();
+        }
+
+        private void SetupGravity()
+        {
+            switch (swordType)
+            {
+                case SwordType.Bounce:
+                    break;
+                case SwordType.Pierce:
+                    swordGravity = pierceGravity;
+                    break;
+                case SwordType.Spin:
+                    break;
+            }
         }
 
         protected override void Update()
@@ -39,7 +69,6 @@ namespace Skills
 
             if (player.inputActions.Aim.IsInProgress())
             {
-                Debug.Log("Pressed still");
                 for (int i = 0; i < dots.Length; i++)
                 {
                     dots[i].transform.position = DotsPosition(i * spaceBetweenDots);
@@ -52,6 +81,13 @@ namespace Skills
             GameObject newSword = Instantiate(swordPrefab, player.transform.position, transform.rotation);
             SwordSkillController newSwordScript = newSword.GetComponent<SwordSkillController>();
 
+            switch (swordType)
+            {
+                case SwordType.Pierce:
+                    newSwordScript.SetupPierceSword(pierceAmount);
+                    break;
+            }
+            
             newSwordScript.SetupSword(finalDir, swordGravity, player, returnSpeed);
             player.AssignNewSword(newSword);
             DotsActive(false);
