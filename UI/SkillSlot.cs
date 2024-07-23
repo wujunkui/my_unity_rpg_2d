@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -9,20 +10,27 @@ namespace UI
         public string skillNameZh;
         public string skillDesc;
         public int cost;
+        public bool isLocked;
+        [SerializeField] private UI ui;
+
+        private void Start()
+        {
+            ui = GetComponentInParent<UI>();
+        }
 
         public void OnPointerEnter(PointerEventData eventData)
         {
-            throw new System.NotImplementedException();
+            ui.skillToolTip.ShowToolTip(this, transform.position);
         }
 
         public void OnPointerExit(PointerEventData eventData)
         {
-            throw new System.NotImplementedException();
+            ui.skillToolTip.HideToolTip();
         }
 
         public void OnPointerDown(PointerEventData eventData)
         {
-            throw new System.NotImplementedException();
+            Debug.Log("Buy skill");
         }
     }
 }
