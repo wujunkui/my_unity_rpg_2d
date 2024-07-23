@@ -8,7 +8,7 @@ namespace Skills
     public enum SwordType
     {
         Regular,
-        Bounce,
+        // Bounce,
         Pierce,
         Spin
     }
@@ -19,13 +19,19 @@ namespace Skills
         [Header("Pierce Info")]
         [SerializeField] private int pierceAmount;
         [SerializeField] private float pierceGravity;
+
+        [Header("Spin Info")] 
+        [SerializeField] private float maxTravelDistance = 7;
+        [SerializeField] private float spinDuration = 2;
+        [SerializeField] private float spinGravity = 2;
+        [SerializeField] private float spinHitCooldown = .5f;
         
         [Header("Skill Info")]
         [SerializeField] private GameObject swordPrefab;
         [SerializeField] private Vector2 launchForce;
         [SerializeField] private float swordGravity;
         [FormerlySerializedAs("returnDurantion")] [SerializeField] private float returnSpeed = 1;
-
+        
 
         private Vector2 finalDir;
 
@@ -48,12 +54,11 @@ namespace Skills
         {
             switch (swordType)
             {
-                case SwordType.Bounce:
-                    break;
                 case SwordType.Pierce:
                     swordGravity = pierceGravity;
                     break;
                 case SwordType.Spin:
+                    swordGravity = spinGravity;
                     break;
             }
         }
@@ -85,6 +90,9 @@ namespace Skills
             {
                 case SwordType.Pierce:
                     newSwordScript.SetupPierceSword(pierceAmount);
+                    break;
+                case SwordType.Spin:
+                    newSwordScript.SetupSpin(true, maxTravelDistance, spinDuration, spinHitCooldown);
                     break;
             }
             

@@ -9,7 +9,8 @@ namespace UI
         [SerializeField] private GameObject mainUI;
         [SerializeField] private GameObject contentParent;
         [SerializeField] private GameObject inGameUI;
-        public ItemToolTip itemToolTip;
+        public ToolTip.ItemToolTip itemToolTip;
+        public ToolTip.SkillToolTip skillToolTip;
         private bool mainUIActive;
 
         private void Start()

@@ -1,5 +1,5 @@
-using System;
 using Items;
+using UI.ToolTip;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
@@ -7,11 +7,12 @@ using UnityEngine.EventSystems;
 
 namespace UI
 {
-    public class UI_ItemSlot : MonoBehaviour, IPointerDownHandler, IPointerEnterHandler, IPointerExitHandler
+    public class ItemSlot : MonoBehaviour, IPointerDownHandler, IPointerEnterHandler, IPointerExitHandler
     {
         [SerializeField] private Image itemImage;
         [SerializeField] private TextMeshProUGUI itemText;
         [SerializeField] private UI ui;
+        [SerializeField] private Sprite emptyImage;
         public InventoryItem item;
 
         private void Start()
@@ -33,8 +34,9 @@ namespace UI
         public void CleanUpSlot()
         {
             item = null;
-            itemImage.sprite = null;
-            itemImage.color = Color.clear;
+            itemImage.sprite = emptyImage;
+            // itemImage.sprite = null;
+            // itemImage.color = Color.clear;
 
             itemText.text = "";
         }
@@ -50,14 +52,14 @@ namespace UI
 
         public void OnPointerEnter(PointerEventData eventData)
         {
-            if(item == null)
+            if(item == null || item?.data == null)
                 return;
             ShowItemInfo();
         }
 
         public void OnPointerExit(PointerEventData eventData)
         {
-            if(item == null)
+            if(item == null|| item?.data == null)
                 return;
             ui.itemToolTip.HideToolTip();
         }

@@ -1,3 +1,5 @@
+using Manager;
+
 namespace Player
 {
     public class PlayerMoveState: PlayerGroundState
@@ -9,11 +11,13 @@ namespace Player
         public override void Enter()
         {
             base.Enter();
+            // AudioManager.instance.PlaySFX(0);
         }
 
         public override void Exit()
         {
             base.Exit();
+            // AudioManager.instance.StopSFX(0);
         }
 
         public override void Update()

@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace UI
+namespace UI.ToolTip
 {
     public class ToolTip : MonoBehaviour
     {

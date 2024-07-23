@@ -27,9 +27,9 @@ namespace Items
         [SerializeField] private Transform inventorySlotParent;
         [SerializeField] private Transform stashSlotParent;
         [SerializeField] private Transform equipmentSlotParent;
-        private UI_ItemSlot[] inventoryItemSlots;
-        private UI_ItemSlot[] stashItemSlots;
-        private UI_EquipmentSlot[] equipmentSlots;
+        private ItemSlot[] inventoryItemSlots;
+        private ItemSlot[] stashItemSlots;
+        private EquipmentSlot[] equipmentSlots;
         
         public List<InventoryItem> loadedItems;
         public List<ItemData_Equipment> loadedEquipments;
@@ -46,9 +46,9 @@ namespace Items
 
         private void Start()
         {
-            inventoryItemSlots = inventorySlotParent.GetComponentsInChildren<UI_ItemSlot>();
-            stashItemSlots = stashSlotParent.GetComponentsInChildren<UI_ItemSlot>();
-            equipmentSlots = equipmentSlotParent.GetComponentsInChildren<UI_EquipmentSlot>();
+            inventoryItemSlots = inventorySlotParent.GetComponentsInChildren<ItemSlot>();
+            stashItemSlots = stashSlotParent.GetComponentsInChildren<ItemSlot>();
+            equipmentSlots = equipmentSlotParent.GetComponentsInChildren<EquipmentSlot>();
             InitInventory();
         }
 

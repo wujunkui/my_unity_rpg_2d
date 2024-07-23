@@ -5,7 +5,7 @@ using UnityEngine;
 
 
 
-namespace UI
+namespace UI.ToolTip
 {
     public class ItemToolTip : ToolTip
     {
@@ -19,15 +19,6 @@ namespace UI
             [EquipmentType.Amulet] = "饰品",
             [EquipmentType.Flask]  = "药剂"
         };
-
-        public string GetItemDesc(ItemData_Equipment item)
-        {
-            string desc = "";
-            desc += $"伤害: +{item.damage}";
-            desc += "\n" + $"暴击: +{item.critChance}%";
-            desc += "\n" + $"暴击伤害: +{item.critDamage}%";
-            return desc;
-        }
 
         public  void ShowToolTip(ItemData_Equipment item, Vector2 position)
         {

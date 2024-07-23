@@ -3,7 +3,7 @@ using UnityEngine.EventSystems;
 
 namespace UI
 {
-    public class UI_EquipmentSlot : UI_ItemSlot
+    public class EquipmentSlot : ItemSlot
     {
         public EquipmentType slotType;
 
