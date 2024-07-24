@@ -30,7 +30,7 @@ public class Entity : MonoBehaviour
     [SerializeField] protected LayerMask whatIsGround;
     [SerializeField] protected Transform wallCheck;
     [SerializeField] protected float wallCheckDistance;
-
+    
     public System.Action onFlipped;
     
     protected virtual void Awake()
@@ -58,6 +58,7 @@ public class Entity : MonoBehaviour
     {
         fx.StartCoroutine("FlashFX");
         StartCoroutine("HitKnockback");
+        fx.ScreenShake(fx.hitShakePower);
     }
 
     protected virtual IEnumerator HitKnockback()
@@ -136,5 +137,7 @@ public class Entity : MonoBehaviour
     {
         
     }
-    
+
+
+
 }

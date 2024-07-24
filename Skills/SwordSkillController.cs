@@ -26,11 +26,14 @@ namespace Skills
         private bool canRotate = true;
         private bool isReturning = false;
         [SerializeField] private int swordDamage = 10;
+
+        private ParticleSystem dustFx;
         private void Awake()
         {
             anim = GetComponentInChildren<Animator>();
             rb = GetComponent<Rigidbody2D>();
             cd = GetComponent<CircleCollider2D>();
+            dustFx = GetComponentInChildren<ParticleSystem>();
         }
 
         public void SetupSword(Vector2 _dir, float _gravityScale, Player.Player _player, float _returnSpeed)
@@ -173,6 +176,9 @@ namespace Skills
             cd.enabled = false;
             rb.isKinematic = true;
             rb.constraints = RigidbodyConstraints2D.FreezeAll;
+            
+            dustFx.Play();
+            
             transform.parent = other.transform;
             anim.SetBool("Rotation", false);
         }

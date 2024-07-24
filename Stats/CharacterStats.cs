@@ -35,7 +35,15 @@ namespace Stats
         public virtual void DoDamage(CharacterStats _targetStats)
         {
             int totalDamage = damage.GetValue();
-            _targetStats.TakeDamage(totalDamage);
+            
+            bool isCritical = false;
+            if (critChance.GetValue() >= Random.Range(0, 100))
+            {
+                isCritical = true;
+                totalDamage = critDamage.GetValue();
+            }
+            
+            _targetStats.TakeDamage(totalDamage, isCritical);
             
         }
         
@@ -43,24 +51,32 @@ namespace Stats
         /// 被伤害多少？
         /// </summary>
         /// <param name="_damage"></param>
-        public virtual void TakeDamage(int _damage)
+        public virtual void TakeDamage(int _damage, bool _isCritical = false)
         {
-            DecreaseHealthBy(_damage);
-            fx.CreateHitFx(transform);
+            DecreaseHealthBy(_damage, _isCritical);
+            if (_isCritical)
+                fx.CreateCriticalHitFx(transform);
+            else
+                fx.CreateHitFx(transform);
             if(currentHealth <= 0)
                 Die();
         }
-
-        protected virtual void PopBeHurtText(int _damage)
+        
+        protected virtual void PopBeHurtText(int _damage, bool _isCritical = false)
         {
-            fx.CreatePopUpText(_damage.ToString());
+            if(_isCritical)
+                fx.CreatePopUpText(_damage.ToString(), Color.yellow, .5f);
+            else
+            {
+                fx.CreatePopUpText(_damage.ToString());
+            }
         }
 
-        public virtual void DecreaseHealthBy(int _damage)
+        public virtual void DecreaseHealthBy(int _damage, bool _isCritical)
         {
             currentHealth -= _damage;
             if (_damage > 0)
-                PopBeHurtText(_damage);
+                PopBeHurtText(_damage, _isCritical);
             onHealthChange?.Invoke();
         }
 

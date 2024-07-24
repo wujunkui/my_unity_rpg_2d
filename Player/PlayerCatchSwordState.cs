@@ -12,6 +12,8 @@ namespace Player
         public override void Enter()
         {
             base.Enter();
+            player.fx.PlayDustFX(); 
+            // player.fx.ScreenShake(player.fx.swordCatchShakePower);
             sword = player.sword.transform;
             if(player.transform.position.x > sword.position.x && player.facingDirection == 1)
                 player.Flip();

@@ -135,7 +135,8 @@ namespace Player
             base.Die();
             stateMachine.ChangeState(deadState);
         }
-
+        
+        
         private void OnMove(InputValue value)
         {
             xInput = value.Get<Vector2>().x;

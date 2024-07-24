@@ -1,6 +1,7 @@
 using System;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 namespace UI
 {
@@ -8,16 +9,25 @@ namespace UI
     {
         public string skillName;
         public string skillNameZh;
-        public string skillDesc;
+        public string[] skillDesc;
         public int cost;
-        public bool isLocked;
+        public bool unLocked;
+        [SerializeField] private Image image;
+        private readonly Color lockedColor = new Color(0.5f,0.5f,0.5f);
         [SerializeField] private UI ui;
 
         private void Start()
         {
             ui = GetComponentInParent<UI>();
+            image = GetComponent<Image>();
+            SetColor();
         }
 
+        private void SetColor()
+        {
+            image.color = unLocked ? Color.white : lockedColor;
+        }
+        
         public void OnPointerEnter(PointerEventData eventData)
         {
             ui.skillToolTip.ShowToolTip(this, transform.position);
@@ -30,7 +40,10 @@ namespace UI
 
         public void OnPointerDown(PointerEventData eventData)
         {
-            Debug.Log("Buy skill");
+            // todo check currency 
+            unLocked = true;
+            // todo play audio
+            SetColor();
         }
     }
 }

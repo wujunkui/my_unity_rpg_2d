@@ -44,6 +44,11 @@ namespace UI
 
         public virtual void OnPointerDown(PointerEventData eventData)
         {
+            if (eventData.button == PointerEventData.InputButton.Right)
+            {
+                // todo 右键菜单，丢弃什么的
+                return;
+            }
             HideItemInfo();
             if(item.data.itemType != ItemType.Equipment)
                 return;

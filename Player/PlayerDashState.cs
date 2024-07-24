@@ -10,6 +10,7 @@ namespace Player
         {
             base.Enter();
             stateTimer = player.dashDuration;
+           
         }
 
         public override void Exit()
@@ -20,6 +21,7 @@ namespace Player
         public override void Update()
         {
             base.Update();
+            
             player.SetVelocity(player.dashSpeed * player.dashDir, 0);
             if (player.IsWallDetected())
             {
@@ -28,6 +30,8 @@ namespace Player
             }
             if (stateTimer < 0)
                 stateMachine.ChangeState(player.idleState);
+            
+            player.fx.CreateAfterImage();
         }
     }
 }

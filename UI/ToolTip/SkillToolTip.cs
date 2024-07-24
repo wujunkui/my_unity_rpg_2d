@@ -13,8 +13,10 @@ namespace UI.ToolTip
 
         public void ShowToolTip(SkillSlot skill, Vector2 position)
         {
+            AdjustPosition(position);
             skillNameText.text = skill.skillNameZh;
-            skillDescription.text = skill.skillDesc;
+            skillDescription.text = string.Join("\n", skill.skillDesc);
+            costText.text = skill.cost.ToString();
             gameObject.SetActive(true);
         }
     }

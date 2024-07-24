@@ -6,16 +6,17 @@ namespace Stats
     public class PlayerStats: CharacterStats
     {
         private Player.Player player;
-
+        [SerializeField] private Color hurtTextColor;
+        [SerializeField] private Color criticalHurtTextColor;
         protected override void Start()
         {
             base.Start();
             player = GetComponent<Player.Player>();
         }
 
-        public override void TakeDamage(int _damage)
+        public override void TakeDamage(int _damage, bool _isCritical = false)
         {
-            base.TakeDamage(_damage);
+            base.TakeDamage(_damage, _isCritical);
             player.DamageEffect();
         }
 
@@ -32,9 +33,14 @@ namespace Stats
             player.Die();
         }
 
-        protected override void PopBeHurtText(int _damage)
+        protected override void PopBeHurtText(int _damage, bool _isCritical = false)
         {
-            fx.CreatePopUpText(_damage.ToString(), Color.yellow);
+            if(_isCritical)
+                fx.CreatePopUpText(_damage.ToString(), criticalHurtTextColor, 1f);
+            else
+            {
+                fx.CreatePopUpText(_damage.ToString(), hurtTextColor);
+            }
         }
 
         public void PopHealText(int _healPoint)

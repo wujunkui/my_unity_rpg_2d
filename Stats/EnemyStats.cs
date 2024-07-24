@@ -14,6 +14,7 @@ namespace Stats
         [SerializeField] private float percentageModifier = 0.1f;
 
         private ItemDrop myDropSystem;
+        [SerializeField] private Stat dropCurrency;
         
         protected override void Start()
         {
@@ -27,21 +28,26 @@ namespace Stats
         {
             Modify(damage);
             Modify(maxHealth);
+            Modify(dropCurrency);
+            Modify(critChance); // todo fix 暴击都超100了
+            Modify(critDamage);
         }
 
         private void Modify(Stat _stat)
         {
+            float totalModify = _stat.GetValue();
             for (int i = 1; i < level; i++)
             {
-                float modifier = _stat.GetValue() * percentageModifier;
-                
-                _stat.AddModifier(Mathf.RoundToInt(modifier));
+                float modifier = totalModify * percentageModifier;
+                totalModify += modifier;
+
             }
+            _stat.AddModifier(Mathf.RoundToInt(totalModify));
         }
 
-        public override void TakeDamage(int _damage)
+        public override void TakeDamage(int _damage, bool _isCritical = false)
         {
-            base.TakeDamage(_damage);
+            base.TakeDamage(_damage, _isCritical);
             enemy.DamageEffect();
         }
 
@@ -50,6 +56,8 @@ namespace Stats
             base.Die();
             enemy.Die();
             myDropSystem.GenerateDrop();
+            // todo 添加金钱掉落特效
+            PlayerManager.instance.currency += dropCurrency.GetValue();
         }
     }
 }
