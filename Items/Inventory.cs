@@ -33,6 +33,7 @@ namespace Items
         
         public List<InventoryItem> loadedItems;
         public List<ItemData_Equipment> loadedEquipments;
+        public System.Action onEquipmentChange;
         
         private void Awake()
         {
@@ -100,16 +101,12 @@ namespace Items
             equipments.Add(newItem);
             equipmentDict.Add(newEquipment, newItem);
             newEquipment.AddModifies();
+            onEquipmentChange?.Invoke();
             RemoveItem(_item);
 
         }
-
-        public void UnequipItem(ItemData_Equipment equipmentToRemove)
-        {
-            UnequipItem(equipmentToRemove, true);
-        }
         
-        public void UnequipItem(ItemData_Equipment equipmentToRemove, bool addToInventory)
+        public void UnequipItem(ItemData_Equipment equipmentToRemove, bool addToInventory = true)
         {
             if (equipmentDict.TryGetValue(equipmentToRemove, out InventoryItem value))
             {
@@ -117,6 +114,7 @@ namespace Items
                 equipmentDict.Remove(equipmentToRemove);
                 equipmentToRemove.RemoveModifies();
                 AddItem(equipmentToRemove);
+                onEquipmentChange?.Invoke();
             }
             
         }

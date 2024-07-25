@@ -4,14 +4,23 @@ namespace Utils
 {
     public class Define
     {
-        public static Dictionary<string, string> propertyZhName = new ()
+        public enum StatType
         {
-            ["strength"] = "力量",
-            ["damage"] = "伤害",
-            ["criticalChange"] = "暴击几率",
-            ["criticalDamage"] = "暴击伤害",
-            ["maxHealth"] = "最大血量",
-            
+            Damage,
+            CriticalChance,
+            CriticalDamage,
+            Armor,
+            MaxHealth,
+            Evasion
+        }
+        public static readonly Dictionary<StatType, string> StatTypeZhName = new ()
+        {
+            [StatType.Damage] = "物理伤害",
+            [StatType.CriticalChance] = "暴击几率",
+            [StatType.CriticalDamage] = "暴击伤害",
+            [StatType.MaxHealth] = "最大血量",
+            [StatType.Armor] = "护甲值",
+            [StatType.Evasion] = "闪避"
         };
     }
 }
