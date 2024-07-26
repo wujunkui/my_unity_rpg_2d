@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using Stats;
 using UnityEngine;
@@ -123,11 +122,14 @@ public class Entity : MonoBehaviour
         
     protected virtual void OnDrawGizmos()
     {
-        Gizmos.DrawLine(groundCheck.position,
-            new Vector3(groundCheck.position.x, groundCheck.position.y - groundCheckDistance));
-        Gizmos.DrawLine(wallCheck.position,
-            new Vector3(wallCheck.position.x + wallCheckDistance, wallCheck.position.y));
-        Gizmos.DrawWireSphere(attackCheck.position, attackCheckRadio);
+        if (groundCheck != null)
+            Gizmos.DrawLine(groundCheck.position,
+                new Vector3(groundCheck.position.x, groundCheck.position.y - groundCheckDistance));
+        if (wallCheck != null)
+            Gizmos.DrawLine(wallCheck.position,
+                new Vector3(wallCheck.position.x + wallCheckDistance, wallCheck.position.y));
+        if (attackCheck != null)
+            Gizmos.DrawWireSphere(attackCheck.position, attackCheckRadio);
     }
         
     #endregion

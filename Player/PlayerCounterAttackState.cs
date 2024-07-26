@@ -1,3 +1,4 @@
+using Controllers;
 using UnityEngine;
 namespace Player
 {
@@ -27,15 +28,26 @@ namespace Player
             Collider2D[] colliders = Physics2D.OverlapCircleAll(player.attackCheck.position, player.attackCheckRadio);
             foreach (var hit in colliders)
             {
+                if (hit.TryGetComponent(out ArrowController value))
+                {
+                    SuccessfulCounterAttack();
+                    value.FlipArrow();
+                }
+                
                 var enemy = hit.GetComponent<Enemy.Enemy>();
                 if (enemy != null && enemy.CanBeStunned())
                 {
-                    stateTimer = 10; // any value bigger than 1;
-                    player.anim.SetBool(successfulCounterAnimName, true);
+                    SuccessfulCounterAttack();
                 }
             }
             if (stateTimer < 0 || triggerCalled)
                 stateMachine.ChangeState(player.idleState);
+        }
+
+        private void SuccessfulCounterAttack()
+        {
+            stateTimer = 10; // any value bigger than 1;
+            player.anim.SetBool(successfulCounterAnimName, true);
         }
     }
 }

@@ -1,8 +1,16 @@
-using System.Collections;
+using Cinemachine;
+using Items;
+using Stats;
 using UnityEngine;
 
 namespace Enemy
 {
+    [RequireComponent(typeof(Rigidbody2D))]
+    [RequireComponent(typeof(BoxCollider2D))]
+    [RequireComponent(typeof(EnemyStats))]
+    [RequireComponent(typeof(EntityFX))]
+    [RequireComponent(typeof(ItemDrop))]
+    [RequireComponent(typeof(CinemachineImpulseSource))]
     public class Enemy : Entity
     {
         [SerializeField] protected LayerMask whatIsPlayer;
