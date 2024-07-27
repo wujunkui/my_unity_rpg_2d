@@ -29,6 +29,7 @@ namespace Stats
         protected virtual void Start()
         {
             currentHealth = maxHealth.GetValue();
+            onHealthChange?.Invoke();
         
         }
 

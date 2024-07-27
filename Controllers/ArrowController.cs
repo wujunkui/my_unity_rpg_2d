@@ -13,13 +13,15 @@ namespace Controllers
         private Rigidbody2D rb;
         private CapsuleCollider2D cd;
         private ParticleSystem particle;
-
+        private SpriteRenderer sr;
+        private bool toDestroy;
 
         private void Awake()
         {
             rb = GetComponent<Rigidbody2D>();
             cd = GetComponent<CapsuleCollider2D>();
             particle = GetComponentInChildren<ParticleSystem>();
+            sr = GetComponent<SpriteRenderer>();
         }
 
         private void Start()
@@ -30,6 +32,8 @@ namespace Controllers
         private void Update()
         {
             rb.velocity = new Vector2(xVelocity, rb.velocity.y);
+            if (toDestroy)
+                FadeDestroy();
         }
 
         public void SetDamage(int _damage)
@@ -74,7 +78,19 @@ namespace Controllers
             rb.isKinematic = true;
             rb.constraints = RigidbodyConstraints2D.FreezeAll;
             transform.parent = other.transform;
-            Destroy(gameObject, 3);
+            Invoke("setToDestroy", 2);
+        }
+
+        private void setToDestroy() => toDestroy = true;
+
+        private void FadeDestroy()
+        {
+            float alpha = sr.color.a - 2 * Time.deltaTime;
+            sr.color = new Color(sr.color.r, sr.color.g, sr.color.b, alpha);
+            
+            if(sr.color.a <= 0)
+                Destroy(gameObject);
+            
         }
     }
 }

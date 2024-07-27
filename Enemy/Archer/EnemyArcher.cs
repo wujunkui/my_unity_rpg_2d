@@ -8,7 +8,9 @@ namespace Enemy.Archer
 {
     public class EnemyArcher: Enemy
     {
-        private BoxCollider2D bd;
+        public BoxCollider2D bd;
+        [Header("Archer special")] 
+        public bool canMove;
         public  Vector2 jumpVelocity;
         public float jumpCoolDown = 1;
         public GameObject arrow;
@@ -53,6 +55,7 @@ namespace Enemy.Archer
         {
             base.Die();
             stateMachine.ChangeState(deadState);
+            Destroy(gameObject, 3);
         }
         
         public bool FallTargetIsGround()
@@ -63,7 +66,7 @@ namespace Enemy.Archer
 
         public void EmitArrow()
         {
-            GameObject newArrow = Instantiate(arrow, transform.position, Quaternion.identity);
+            GameObject newArrow = Instantiate(arrow, attackCheck.position, Quaternion.identity);
             if (!facingRight)
             {
                 var controller = newArrow.GetComponent<ArrowController>();

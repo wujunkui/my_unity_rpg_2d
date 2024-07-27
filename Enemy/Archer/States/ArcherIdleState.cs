@@ -21,7 +21,7 @@ namespace Enemy.Archer.States
         public override void Update()
         {
             base.Update();
-            if(stateTimer < 0)
+            if(stateTimer < 0 && enemy.canMove)
                 stateMachine.ChangeState(enemy.moveState);
         }
     }

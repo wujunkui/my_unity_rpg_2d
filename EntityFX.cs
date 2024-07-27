@@ -21,9 +21,9 @@ public class EntityFX : MonoBehaviour
     [Header("Screen shake FX")] 
     private CinemachineImpulseSource screenShake;
 
-    [SerializeField] private float shakeMultiplier;
+    [SerializeField] private float shakeMultiplier = 0.2f;
     public Vector3 swordCatchShakePower;
-    public Vector3 hitShakePower;
+    public Vector3 hitShakePower = new(0.5f,0);
     
     [Header("Hit Fx")] 
     [SerializeField] private GameObject hitFxPrefab;

@@ -12,7 +12,9 @@ namespace Player
         public override void Enter()
         {
             base.Enter();
-            player.fx.PlayDustFX(); 
+            // 只有在地上接住剑才有尘土
+            if(player.IsGroundedDetected())
+                player.fx.PlayDustFX(); 
             // player.fx.ScreenShake(player.fx.swordCatchShakePower);
             sword = player.sword.transform;
             if(player.transform.position.x > sword.position.x && player.facingDirection == 1)

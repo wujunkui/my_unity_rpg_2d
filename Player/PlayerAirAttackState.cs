@@ -18,10 +18,14 @@ namespace Player
         {
             base.Update();
             if(player.IsGroundedDetected())
-                // player.SetZeroVelocity();
-                stateMachine.ChangeState(player.idleState);
+                player.SetZeroVelocity();
             if(triggerCalled)
-                stateMachine.ChangeState(player.fallState);
+            {
+                if (player.IsGroundedDetected())
+                    stateMachine.ChangeState(player.idleState);
+                else
+                    stateMachine.ChangeState(player.fallState);
+            }
         }
     }
 }
