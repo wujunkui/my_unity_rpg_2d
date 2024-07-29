@@ -1,3 +1,4 @@
+using System;
 using Cinemachine;
 using Items;
 using Stats;
@@ -85,6 +86,11 @@ namespace Enemy
         public virtual void AssignLastAnimName(string _animBoolName)
         {
             lastAnimName = _animBoolName;
+        }
+        
+        protected virtual TState CreateNewState<TState>(string _animName) where TState: EnemyState
+        {
+            return (TState)Activator.CreateInstance(typeof(TState), this, stateMachine, _animName, this);
         }
         
     }

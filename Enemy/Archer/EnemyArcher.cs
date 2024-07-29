@@ -33,10 +33,6 @@ namespace Enemy.Archer
             deadState = CreateNewState<ArcherDeadState>("Dead");
         }
         
-        private TState CreateNewState<TState>(string _animName) where TState: ArcherState
-        {
-            return (TState)Activator.CreateInstance(typeof(TState), this, stateMachine, _animName, this);
-        }
 
         protected override void Awake()
         {
