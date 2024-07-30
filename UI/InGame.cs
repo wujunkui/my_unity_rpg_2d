@@ -16,6 +16,7 @@ namespace UI
         {
             if (playerStats != null)
                 playerStats.onHealthChange += UpdateHealthUI;
+            currencyShow = PlayerManager.instance.currency;
         }
 
         private void Update()

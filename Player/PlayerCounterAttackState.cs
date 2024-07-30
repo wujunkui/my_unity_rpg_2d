@@ -28,6 +28,7 @@ namespace Player
             Collider2D[] colliders = Physics2D.OverlapCircleAll(player.attackCheck.position, player.attackCheckRadio);
             foreach (var hit in colliders)
             {
+                // 反弹弓箭
                 if (hit.TryGetComponent(out ArrowController value))
                 {
                     SuccessfulCounterAttack();
@@ -38,6 +39,7 @@ namespace Player
                 if (enemy != null && enemy.CanBeStunned())
                 {
                     SuccessfulCounterAttack();
+                    enemy.stats.TakeDamage(player.stats.damage.GetValue());
                 }
             }
             if (stateTimer < 0 || triggerCalled)
