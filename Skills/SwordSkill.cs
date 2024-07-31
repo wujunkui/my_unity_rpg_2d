@@ -25,6 +25,7 @@ namespace Skills
         [SerializeField] private float spinDuration = 2;
         [SerializeField] private float spinGravity = 2;
         [SerializeField] private float spinHitCooldown = .5f;
+        [SerializeField] private float slowMoveSpeed = 2;
         
         [Header("Skill Info")]
         [SerializeField] private GameObject swordPrefab;

@@ -106,6 +106,8 @@ namespace Skills
 
                     hitTimer = hitCooldown;
                 }
+                // transform.position = new Vector3(transform.position.x)
+                
                 if (spinTimer < 0)
                 {
                     isReturning = true;
